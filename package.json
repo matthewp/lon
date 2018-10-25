@@ -15,12 +15,16 @@
     "put.js",
     "query.js",
     "delete.js",
+    "update.js",
     "key-params.js",
+    "attributes.js",
+    "type.js",
+    "wrap.js",
     "index.js"
   ],
   "keywords": ["dynamodb"],
-  "author": "",
-  "license": "ISC",
+  "author": "Matthew Phillips",
+  "license": "BSD-2-Claude",
   "bugs": {
     "url": "https://github.com/matthewp/lon/issues"
   },

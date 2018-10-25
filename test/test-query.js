@@ -11,7 +11,7 @@ describe('Query', () => {
 
     assert.deepStrictEqual(params, {
       TableName: 'people',
-      ScanIndexForward: false,
+      ScanIndexForward: true,
       ProjectionExpression: '#n, #a',
       KeyConditionExpression: '#l = :l AND #a > :a',
       ExpressionAttributeNames: {
@@ -25,6 +25,26 @@ describe('Query', () => {
         },
         ':a': {
           N: "12"
+        }
+      }
+    });
+  });
+
+  it('Selecting fields is optional', () => {
+    let params = new Query('scores')
+    .where('id = ?', 14)
+    .params();
+
+    assert.deepStrictEqual(params, {
+      TableName: 'scores',
+      ScanIndexForward: true,
+      KeyConditionExpression: '#i = :i',
+      ExpressionAttributeNames: {
+        '#i': 'id'
+      },
+      ExpressionAttributeValues: {
+        ':i': {
+          N: '14'
         }
       }
     });
