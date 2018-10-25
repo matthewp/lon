@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Query = require('./query.js');
+const { Query } = require('../index.js');
 
 describe('Query', () => {
   it('Basics works', () => {
@@ -28,6 +28,5 @@ describe('Query', () => {
         }
       }
     });
-
   });
 });

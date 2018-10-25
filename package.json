@@ -4,13 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test/"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/matthewp/lon.git"
   },
-  "keywords": [],
+  "files": [
+    "get.js",
+    "put.js",
+    "query.js",
+    "delete.js",
+    "key-params.js",
+    "index.js"
+  ],
+  "keywords": ["dynamodb"],
   "author": "",
   "license": "ISC",
   "bugs": {
