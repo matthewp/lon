@@ -33,4 +33,21 @@ describe('Type.prototype.update()', () => {
       }
     });
   });
+
+  it('Throws when there are no properties to be updated', () => {
+    const Person = class extends type('person') {
+      static get key() { return 'id'; }
+    };
+
+    let me = new Person({ id: 11 });
+
+    let threw = false;
+    try {
+      me.update();
+    } catch(err) {
+      threw = true;
+    }
+
+    assert.ok(threw, 'Threw because there are no props to update');
+  });
 });

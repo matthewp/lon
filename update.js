@@ -28,6 +28,10 @@ class Update extends KeyParams {
       ExpressionAttributeValues: this._attribute.buildExpressionAttributeValues()
     };
   }
+
+  values() {
+    return this._attribute.values();
+  }
 }
 
 module.exports = Update;

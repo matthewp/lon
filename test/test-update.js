@@ -27,4 +27,11 @@ describe('Update', () => {
       }
     });
   });
+
+  it('Can inspect update values', () => {
+    let upd = new Update('mytable').key('id', 15)
+      .set('name', 'Wilbur');
+
+    assert.equal(upd.values().get('name'), 'Wilbur');
+  });
 });

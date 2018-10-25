@@ -81,11 +81,18 @@ module.exports = function(tableName) {
       let update = new Update(tableName);
       update.key(...keyArgs);
       
+      let updateCount = 0;
       for(let [name, value] of Object.entries(this)) {
         if(!keys.has(name)) {
+          updateCount++;
           update.set(name, value);
         }
       }
+
+      if(updateCount === 0) {
+        throw new Error('Cannot perform update. This object has no updatable properties.');
+      }
+
       return update;
     }
 

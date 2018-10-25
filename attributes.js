@@ -1,11 +1,20 @@
 const { wrap } = require('./wrap.js');
 
+function mapToObj(map) {
+  let obj = {};
+  for(let [key, value] of map) {
+    obj[key] = value;
+  }
+  return obj;
+}
+
 class Attributes {
   constructor() {
     this._names = new Set();
     this._values = new Set();
-    this._namesMap = Object.create(Object.prototype);
-    this._valueMap = Object.create(Object.prototype);
+    this._namesMap = new Map();
+    this._valuesMap = new Map();
+    this._valuePairs = new Map();
   }
 
   add(name) {
@@ -16,7 +25,7 @@ class Attributes {
 
     do {
       let alias = '#' + char;
-      if(!(alias in map) || map[alias] === name) {
+      if(!map.has(alias) || map.get(alias) === name) {
         cont = false;
       } else {
         let code = char.charCodeAt(0);
@@ -34,7 +43,7 @@ class Attributes {
     let alias = '#' + char;
 
     this._names.add(alias);
-    this._namesMap[alias] = name;
+    this._namesMap.set(alias, name);
 
     return alias;
   }
@@ -43,17 +52,22 @@ class Attributes {
     let alias = this.add(name);
 
     let valueAlias = ':' + alias[1];
-    this._valueMap[valueAlias] = value;
+    this._valuesMap.set(valueAlias, value);
+    this._valuePairs.set(name, value);
 
     return [alias, valueAlias];
   }
 
+  values() {
+    return new Map(this._valuePairs);
+  }
+
   buildExpressionAttributeNames() {
-    return this._namesMap;
+    return mapToObj(this._namesMap);
   }
 
   buildExpressionAttributeValues() {
-    return wrap(this._valueMap);
+    return wrap(mapToObj(this._valuesMap));
   }
 }
 
