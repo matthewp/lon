@@ -11,16 +11,16 @@
     "url": "git+https://github.com/matthewp/lon.git"
   },
   "files": [
+    "attributes.js",
+    "delete.js",
     "get.js",
+    "index.js",
+    "key-params.js",
     "put.js",
     "query.js",
-    "delete.js",
-    "update.js",
-    "key-params.js",
-    "attributes.js",
     "type.js",
-    "wrap.js",
-    "index.js"
+    "update.js",
+    "wrap.js"
   ],
   "keywords": ["dynamodb"],
   "author": "Matthew Phillips",
