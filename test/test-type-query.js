@@ -25,4 +25,25 @@ describe('Type.query()', () => {
       }
     });
   });
+
+  it('Can use the index', () => {
+    const User = type('users');
+
+    let params = User.query({ id: 44 }).index('person-index').params();
+
+    assert.deepStrictEqual(params, {
+      TableName: 'users',
+      IndexName: 'person-index',
+      ScanIndexForward: true,
+      KeyConditionExpression: '#i = :i',
+      ExpressionAttributeNames: {
+        '#i': 'id'
+      },
+      ExpressionAttributeValues: {
+        ':i': {
+          N: '44'
+        }
+      }
+    });
+  });
 });

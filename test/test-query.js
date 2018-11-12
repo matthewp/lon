@@ -49,4 +49,26 @@ describe('Query', () => {
       }
     });
   });
+
+  it('Can provide an index', () => {
+    let params = new Query('activity')
+    .index('Topic-index')
+    .where('id = ?', 14)
+    .params();
+
+    assert.deepStrictEqual(params, {
+      TableName: 'activity',
+      IndexName: 'Topic-index',
+      ScanIndexForward: true,
+      KeyConditionExpression: '#i = :i',
+      ExpressionAttributeNames: {
+        '#i': 'id'
+      },
+      ExpressionAttributeValues: {
+        ':i': {
+          N: '14'
+        }
+      }
+    });
+  });
 });

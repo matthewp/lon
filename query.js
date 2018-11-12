@@ -7,6 +7,7 @@ function trim(str) {
 class Query {
   constructor(tableName) {
     this._tableName = tableName;
+    this._indexName = null;
     this._scanIndexForward = true;
     this._conditions = [];
     this._projections = new Set();
@@ -40,6 +41,11 @@ class Query {
     return this;
   }
 
+  index(name) {
+    this._indexName = name;
+    return this;
+  }
+
   get keyConditionExpression() {
     return this._conditions.map(cond => cond.join(' ')).join(' AND ');
   }
@@ -60,6 +66,10 @@ class Query {
       ExpressionAttributeNames: this._attributes.buildExpressionAttributeNames(),
       ExpressionAttributeValues: this._attributes.buildExpressionAttributeValues()
     };
+
+    if(this._indexName) {
+      params.IndexName = this._indexName;
+    }
 
     let projectionExpression = this.projectionExpression;
     if(this.projectionExpression.length > 0) {
