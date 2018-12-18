@@ -34,4 +34,33 @@ describe('Update', () => {
 
     assert.equal(upd.values().get('name'), 'Wilbur');
   });
+
+  it('Multiple sets are separated by a comma', () => {
+    let params = new Update('mytable').key('id', 15)
+      .set('name', 'Wilbur')
+      .set('breed', 'Staffordshire')
+      .params();
+
+    assert.deepStrictEqual(params, {
+      TableName: 'mytable',
+      Key: {
+        id: {
+          N: '15'
+        }
+      },
+      UpdateExpression: 'SET #n = :n, #b = :b',
+      ExpressionAttributeNames: {
+        '#n': 'name',
+        '#b': 'breed'
+      },
+      ExpressionAttributeValues: {
+        ':n': {
+          S: 'Wilbur'
+        },
+        ':b': {
+          S: 'Staffordshire'
+        }
+      }
+    });
+  });
 });
