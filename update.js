@@ -10,13 +10,19 @@ class Update extends KeyParams {
 
   set(name, value) {
     let [nameAlias, valueAlias] = this._attribute.addValue(name, value);
-    this._expr.push(['SET', nameAlias, '=', valueAlias]);
+    let previousExprCount = this._expr.length;
 
+    if(!previousExprCount) {
+      this._expr.push(['SET', nameAlias, '=', valueAlias]);
+    } else {
+      this._expr.push([nameAlias, '=', valueAlias]);
+    }
+    
     return this;
   }
 
   buildUpdateExpression() {
-    return this._expr.map(arr => arr.join(' ')).join(' AND ');
+    return this._expr.map(arr => arr.join(' ')).join(', ');
   }
 
   params() {
